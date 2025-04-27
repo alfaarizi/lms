@@ -1,44 +1,82 @@
 <x-app-layout>
     <x-slot name="header">
-        <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-            {{ __('Tasks for') }} {{ $subject->name }}
-        </h2>
+        <div class="flex justify-between items-center">
+            <h2 class="font-semibold text-xl text-gray-200 leading-tight mt-2">
+                Tasks for {{ $subject->name }}
+            </h2>
+            <div class="flex space-x-2">
+                @if(auth()->user()->isTeacher() && $subject->teacher_id === auth()->id())
+                    <a href="{{ route('tasks.create', $subject) }}" class="inline-flex items-center px-4 py-2 bg-gray-800 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-gray-700 focus:bg-gray-700 active:bg-gray-900 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 transition ease-in-out duration-150 ml-3">
+                        Create New Task
+                    </a>
+                @endif
+                <a href="{{ route('subjects.show', $subject) }}" class="inline-flex items-center px-4 py-2 bg-gray-800 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-gray-700 focus:bg-gray-700 active:bg-gray-900 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 transition ease-in-out duration-150 ml-3">
+                    Back to Subject
+                </a>
+            </div>
+        </div>
     </x-slot>
 
     <div class="py-12">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
             <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
+                <div class="h-2 bg-indigo-500"></div>
                 <div class="p-6 bg-white border-b border-gray-200">
-                    <div class="mb-4">
-                        <a href="{{ route('subjects.show', $subject) }}" class="text-blue-500 hover:underline">
-                            &larr; Back to Subject
-                        </a>
-                    </div>
-
-                    @if(Auth::user()->isTeacher() && Auth::id() === $subject->teacher_id)
-                        <div class="mb-6">
-                            <a href="{{ route('tasks.create', $subject) }}" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
-                                Create New Task
-                            </a>
+                    @if($subject->tasks->isEmpty())
+                        <div class="alert alert-info">
+                            <div class="flex-1">
+                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" class="w-6 h-6 mx-2 stroke-current">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                                </svg>
+                                <span>No tasks available for this subject.</span>
+                            </div>
                         </div>
-                    @endif
-
-                    <h3 class="text-lg font-semibold mb-4">All Tasks</h3>
-                    
-                    @if($tasks->isEmpty())
-                        <p>No tasks found for this subject.</p>
                     @else
-                        <div class="grid grid-cols-1 gap-4">
-                            @foreach($tasks as $task)
-                                <div class="border rounded p-4">
-                                    <h3 class="font-bold">{{ $task->name }}</h3>
-                                    <p class="text-sm text-gray-600">Due: {{ $task->due_date ? $task->due_date->format('F j, Y') : 'N/A' }}</p>
-                                    <p class="text-sm text-gray-600">Points: {{ $task->points }}</p>
-                                    <div class="mt-4">
-                                        <a href="{{ route('tasks.show', [$subject, $task]) }}" class="text-blue-500 hover:underline">View Details</a>
-                                    </div>
-                                </div>
-                            @endforeach
+                        <div class="overflow-x-auto">
+                            <table class="table w-full table-zebra border-collapse border border-gray-800">
+                                <thead>
+                                    <tr>
+                                        <th class="text-gray-600">Name</th>
+                                        <th class="text-gray-600">Description</th>
+                                        <th class="text-gray-600">Points</th>
+                                        <th class="text-gray-600">Due Date</th>
+                                        <th colspan="3" class="text-gray-600 text-center">Actions</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach($subject->tasks as $task)
+                                        <tr class="odd:bg-gray-800 {{ $task->due_date < now() ? 'bg-red-50' : '' }}">
+                                            <td>{{ $task->name }}</td>
+                                            <td class="truncate max-w-xs">{{ Str::limit($task->description, 50) }}</td>
+                                            <td>{{ $task->points }}</td>
+                                            <td>
+                                                {{ $task->due_date->format('Y-m-d H:i') }}
+                                                @if($task->due_date < now())
+                                                    <span class="badge badge-error badge-sm">Expired</span>
+                                                @endif
+                                            </td>
+                                            <td class="flex space-x-1">
+                                                <a href="{{ route('tasks.show', [$subject, $task]) }}" class="btn btn-xs btn-outline btn-info normal-case">
+                                                    View
+                                                </a>
+                                                @if(auth()->user()->isTeacher())
+                                                    <a href="{{ route('tasks.edit', [$subject, $task]) }}" class="btn btn-xs btn-outline btn-accent normal-case">
+                                                        Edit
+                                                    </a>
+                                                    <a href="{{ route('solutions.index', [$subject, $task]) }}" class="btn btn-xs btn-outline btn-success normal-case">
+                                                        Solutions
+                                                    </a>
+                                                @endif
+                                                @if(auth()->user()->isStudent())
+                                                    <a href="{{ route('solutions.create', [$subject, $task]) }}" class="btn btn-xs btn-outline btn-primary normal-case">
+                                                        Submit
+                                                    </a>
+                                                @endif
+                                            </td>
+                                        </tr>
+                                    @endforeach
+                                </tbody>
+                            </table>
                         </div>
                     @endif
                 </div>
