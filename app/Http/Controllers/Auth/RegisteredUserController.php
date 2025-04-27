@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
 use App\Models\User;
+use App\Services\NeptunCodeGenerator;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
@@ -37,8 +38,10 @@ class RegisteredUserController extends Controller
 
         $user = User::create([
             'name' => $request->name,
+            'neptun' => app(NeptunCodeGenerator::class)->generate(),
             'email' => $request->email,
             'password' => Hash::make($request->password),
+            'role' => 'student'
         ]);
 
         event(new Registered($user));

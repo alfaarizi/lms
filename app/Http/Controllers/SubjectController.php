@@ -75,16 +75,12 @@ class SubjectController extends Controller
         $validated = $request->validate([
             'name' => 'required|string|min:3|max:255',
             'description' => 'nullable|string',
-            'code' => [
-                'required',
-                'string',
-                'max:9',
-                'unique:subjects',
-                'regex:/^IK-[A-Z]{3}[0-9]{3}$/'
-            ],
             'credit' => 'required|integer|min:1',
         ]);
-        $subject->update($validated);
+        $subject->update([
+            ...$validated,
+            'code' => $subject->code,
+        ]);
         return redirect()
             ->route('subjects.show', $subject)
             ->with('success', 'Subject updated successfully');

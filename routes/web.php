@@ -10,56 +10,67 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('/dashboard', function () {
-    return redirect()->route('subjects.index');
-})->middleware(['auth', 'verified'])->name('dashboard');
+Route::middleware(['auth', 'verified'])->group(function () {
+    Route::get('/dashboard', function () {
+        return redirect()->route('subjects.index');
+    })->name('dashboard');
 
-// Both teachers and students
-Route::middleware(['auth','verified'])->group(function () {
-    Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
-    Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
-    Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+    // Profile management
+    Route::controller(ProfileController::class)->group(function () {
+        Route::get('/profile', 'edit')->name('profile.edit');
+        Route::patch('/profile', 'update')->name('profile.update');
+        Route::delete('/profile', 'destroy')->name('profile.destroy');
+    });
 
-    // Subjects - View only
-    Route::get('/subjects', [SubjectController::class, 'index'])->name('subjects.index');
-    Route::get('/subjects/{subject}', [SubjectController::class, 'show'])->name('subjects.show');
-    
-    // Tasks - View only
-    Route::get('/subjects/{subject}/tasks', [TaskController::class, 'index'])->name('tasks.index');
-    Route::get('/subjects/{subject}/tasks/{task}', [TaskController::class, 'show'])->name('tasks.show');
-});
+    // Subject routes
+    Route::controller(SubjectController::class)->group(function () {
+        Route::get('/subjects', 'index')->name('subjects.index');
+        Route::middleware('role:teacher')->group(function() {
+            Route::get('/subjects/create' ,'create')->name('subjects.create');
+            Route::post('/subjects', 'store')->name('subjects.store');
+        });
+        // Subject-specific routes
+        Route::get('/subjects/{subject}', 'show')->name('subjects.show');
+        Route::middleware('role:teacher')->group(function () {
+            Route::get('/subjects/{subject}/edit', 'edit')->name('subjects.edit');
+            Route::put('/subjects/{subject}', 'update')->name('subjects.update');
+            Route::delete('/subjects/{subject}', 'destroy')->name('subjects.destroy');
+        });
+        Route::middleware('role:student')->group(function () {
+            Route::post('/subjects/{subject}/enroll', 'enroll')->name('subjects.enroll');
+            Route::delete('/subjects/{subject}/leave', 'leave')->name('subjects.leave');
+        });
+    });
 
-// Teacher
-Route::middleware(['auth','verified','role:teacher'])->group(function () {
-    // Subjects - Create, Update, Delete
-    Route::get('/subjects/create', [SubjectController::class, 'create'])->name('subjects.create');
-    Route::post('/subjects', [SubjectController::class, 'store'])->name('subjects.store');
-    Route::get('/subjects/{subject}/edit', [SubjectController::class, 'edit'])->name('subjects.edit');
-    Route::put('/subjects/{subject}', [SubjectController::class, 'update'])->name('subjects.update');
-    Route::delete('/subjects/{subject}', [SubjectController::class, 'destroy'])->name('subjects.destroy');
-    
-    // Tasks - Create, Update, Delete
-    Route::get('/subjects/{subject}/tasks/create', [TaskController::class, 'create'])->name('tasks.create');
-    Route::post('/subjects/{subject}/tasks', [TaskController::class, 'store'])->name('tasks.store');
-    Route::get('/subjects/{subject}/tasks/{task}/edit', [TaskController::class, 'edit'])->name('tasks.edit');
-    Route::put('/subjects/{subject}/tasks/{task}', [TaskController::class, 'update'])->name('tasks.update');
-    Route::delete('/subjects/{subject}/tasks/{task}', [TaskController::class, 'destroy'])->name('tasks.destroy');
-    
-    // Solutions - View and evaluate
-    Route::get('/subjects/{subject}/tasks/{task}/solutions', [SolutionController::class, 'index'])->name('solutions.index');
-    Route::get('/subjects/{subject}/tasks/{task}/solutions/{solution}', [SolutionController::class, 'show'])->name('solutions.show');
-    Route::put('/subjects/{subject}/tasks/{task}/solutions/{solution}', [SolutionController::class, 'update'])->name('solutions.update');
-});
+    // Task routes
+    Route::controller(TaskController::class)->group(function () {
+        Route::get('/subjects/{subject}/tasks', 'index')->name('tasks.index');
+        Route::middleware('role:teacher')->group(function () {
+            Route::get('/subjects/{subject}/tasks/create', 'create')->name('tasks.create');
+            Route::post('/subjects/{subject}/tasks', 'store')->name('tasks.store');
+        });
+        // Task-specific routes
+        Route::get('/subjects/{subject}/tasks/{task}', 'show')->name('tasks.show');
+        Route::middleware('role:teacher')->group(function () {
+            Route::get('/subjects/{subject}/tasks/{task}/edit', 'edit')->name('tasks.edit');
+            Route::put('/subjects/{subject}/tasks/{task}', 'update')->name('tasks.update');
+            Route::delete('/subjects/{subject}/tasks/{task}', 'destroy')->name('tasks.destroy');
+        });
+    });
 
-// Student
-Route::middleware(['auth','verified','role:student'])->group(function () {
-    // Subject enrollment
-    Route::post('/subjects/{subject}/enroll', [SubjectController::class, 'enroll'])->name('subjects.enroll');
-    Route::delete('/subjects/{subject}/leave', [SubjectController::class, 'leave'])->name('subjects.leave');
-    
-    // Solutions - Submit
-    Route::get('/subjects/{subject}/tasks/{task}/solutions/create', [SolutionController::class, 'create'])->name('solutions.create');
-    Route::post('/subjects/{subject}/tasks/{task}/solutions', [SolutionController::class, 'store'])->name('solutions.store');
+    // Solution routes
+    Route::controller(SolutionController::class)->group(function () {
+        Route::middleware('role:teacher')->group(function () {
+            Route::get('/subjects/{subject}/tasks/{task}/solutions', 'index')->name('solutions.index');
+            Route::get('/subjects/{subject}/tasks/{task}/solutions/{solution}', 'show')->name('solutions.show');
+            Route::put('/subjects/{subject}/tasks/{task}/solutions/{solution}', 'update')->name('solutions.update');
+        });
+        Route::middleware('role:student')->group(function () {
+            Route::get('/subjects/{subject}/tasks/{task}/solutions/create', 'create')->name('solutions.create');
+            Route::post('/subjects/{subject}/tasks/{task}/solutions', 'store')->name('solutions.store');
+        });
+    });
+
 });
 
 require __DIR__.'/auth.php';

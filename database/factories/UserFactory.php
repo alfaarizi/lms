@@ -2,6 +2,7 @@
 
 namespace Database\Factories;
 
+use App\Services\NeptunCodeGenerator;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Str;
@@ -23,17 +24,9 @@ class UserFactory extends Factory
      */
     public function definition(): array
     {
-        // Generate neptun code: 6 characters of letters and numbers
-        $neptun = '';
-        for ($i = 0; $i < 6; $i++) {
-            $neptun .= $this->faker->randomElement(
-                array_merge(range('A', 'Z'), range('0', '9'))
-            );
-        }
-
         return [
             'name' => fake()->name(),
-            'neptun' => $neptun,
+            'neptun' => app(NeptunCodeGenerator::class)->generate(),
             'email' => fake()->unique()->safeEmail(),
             'email_verified_at' => now(),
             'password' => static::$password ??= Hash::make('password'),

@@ -32,7 +32,7 @@
                             @foreach($tasks as $task)
                                 <div class="border rounded p-4">
                                     <h3 class="font-bold">{{ $task->name }}</h3>
-                                    <p class="text-sm text-gray-600">Due: {{ $task->due_date->format('F j, Y') }}</p>
+                                    <p class="text-sm text-gray-600">Due: {{ $task->due_date ? $task->due_date->format('F j, Y') : 'N/A' }}</p>
                                     <p class="text-sm text-gray-600">Points: {{ $task->points }}</p>
                                     <div class="mt-4">
                                         <a href="{{ route('tasks.show', [$subject, $task]) }}" class="text-blue-500 hover:underline">View Details</a>
