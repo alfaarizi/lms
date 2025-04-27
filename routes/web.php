@@ -11,10 +11,6 @@ Route::get('/', function () {
 });
 
 Route::middleware(['auth', 'verified'])->group(function () {
-    Route::get('/dashboard', function () {
-        return redirect()->route('subjects.index');
-    })->name('dashboard');
-
     // Profile management
     Route::controller(ProfileController::class)->group(function () {
         Route::get('/profile', 'edit')->name('profile.edit');
@@ -24,6 +20,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
 
     // Subject routes
     Route::controller(SubjectController::class)->group(function () {
+        Route::get('/dashboard', 'dashboard')->name(name: 'dashboard');
         Route::get('/subjects', 'index')->name('subjects.index');
         Route::middleware('role:teacher')->group(function() {
             Route::get('/subjects/create' ,'create')->name('subjects.create');
@@ -60,14 +57,14 @@ Route::middleware(['auth', 'verified'])->group(function () {
 
     // Solution routes
     Route::controller(SolutionController::class)->group(function () {
+        Route::middleware('role:student')->group(function () {
+            Route::get('/subjects/{subject}/tasks/{task}/solutions/create', 'create')->name('solutions.create');
+            Route::post('/subjects/{subject}/tasks/{task}/solutions', 'store')->name('solutions.store');
+        });
         Route::middleware('role:teacher')->group(function () {
             Route::get('/subjects/{subject}/tasks/{task}/solutions', 'index')->name('solutions.index');
             Route::get('/subjects/{subject}/tasks/{task}/solutions/{solution}', 'show')->name('solutions.show');
             Route::put('/subjects/{subject}/tasks/{task}/solutions/{solution}', 'update')->name('solutions.update');
-        });
-        Route::middleware('role:student')->group(function () {
-            Route::get('/subjects/{subject}/tasks/{task}/solutions/create', 'create')->name('solutions.create');
-            Route::post('/subjects/{subject}/tasks/{task}/solutions', 'store')->name('solutions.store');
         });
     });
 

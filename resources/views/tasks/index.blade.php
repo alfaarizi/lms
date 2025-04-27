@@ -6,11 +6,11 @@
             </h2>
             <div class="flex space-x-2">
                 @if(auth()->user()->isTeacher() && $subject->teacher_id === auth()->id())
-                    <a href="{{ route('tasks.create', $subject) }}" class="inline-flex items-center px-4 py-2 bg-gray-800 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-gray-700 focus:bg-gray-700 active:bg-gray-900 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 transition ease-in-out duration-150 ml-3">
+                    <a href="{{ route('tasks.create', $subject) }}" class="inline-flex items-center px-4 py-2 bg-green-700 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-gray-700 focus:bg-gray-700 active:bg-gray-900 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 transition ease-in-out duration-150 ml-3">
                         Create New Task
                     </a>
                 @endif
-                <a href="{{ route('subjects.show', $subject) }}" class="inline-flex items-center px-4 py-2 bg-gray-800 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-gray-700 focus:bg-gray-700 active:bg-gray-900 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 transition ease-in-out duration-150 ml-3">
+                <a href="{{ route('subjects.show', $subject) }}" class="inline-flex items-center px-4 py-2 bg-indigo-700 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-gray-700 focus:bg-gray-700 active:bg-gray-900 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 transition ease-in-out duration-150 ml-3">
                     Back to Subject
                 </a>
             </div>
@@ -56,19 +56,19 @@
                                                 @endif
                                             </td>
                                             <td class="flex space-x-1">
-                                                <a href="{{ route('tasks.show', [$subject, $task]) }}" class="btn btn-xs btn-outline btn-info normal-case">
+                                                <a href="{{ route('tasks.show', [$subject, $task]) }}" class="bg-blue-500 btn btn-xs btn-outline btn-info normal-case mr-0">
                                                     View
                                                 </a>
                                                 @if(auth()->user()->isTeacher())
-                                                    <a href="{{ route('tasks.edit', [$subject, $task]) }}" class="btn btn-xs btn-outline btn-accent normal-case">
+                                                    <a href="{{ route('tasks.edit', [$subject, $task]) }}" class="bg-yellow-600 btn btn-xs btn-outline btn-accent normal-case">
                                                         Edit
                                                     </a>
-                                                    <a href="{{ route('solutions.index', [$subject, $task]) }}" class="btn btn-xs btn-outline btn-success normal-case">
+                                                    <a href="{{ route('solutions.index', [$subject, $task]) }}" class="bg-green-700 btn btn-xs btn-outline btn-success normal-case">
                                                         Solutions
                                                     </a>
                                                 @endif
                                                 @if(auth()->user()->isStudent())
-                                                    <a href="{{ route('solutions.create', [$subject, $task]) }}" class="btn btn-xs btn-outline btn-primary normal-case">
+                                                    <a href="{{ route('solutions.create', [$subject, $task]) }}" class="bg-green-700 btn btn-xs btn-outline btn-primary normal-case">
                                                         Submit
                                                     </a>
                                                 @endif

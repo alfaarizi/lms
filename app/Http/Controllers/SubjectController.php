@@ -9,13 +9,24 @@ use Illuminate\Support\Facades\Auth;
 class SubjectController extends Controller
 {
     /**
-     * Display a listing of the subject.
+     * Display a listing of all subjects.
+     */
+    public function dashboard()
+    {
+        $subjects = Subject::all();
+        $viewType = 'all';
+        return view('subjects.index', compact('subjects', 'viewType'));
+    }
+
+    /**
+     * Display a listing of the user's subject.
      */
     public function index()
     {
         $user = Auth::user();
         $subjects = $user->isTeacher() ? $user->taughtSubjects : $user->enrolledSubjects;
-        return view('subjects.index', compact('subjects'));
+        $viewType = 'self';
+        return view('subjects.index', compact('subjects', 'viewType'));
     }
 
     /**

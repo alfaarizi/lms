@@ -58,17 +58,6 @@
                     </div>
                 </div>
                 
-                <!-- Breadcrumbs -->
-                @if(isset($breadcrumbs))
-                <div class="p-4">
-                    <div class="breadcrumbs text-sm">
-                        <ul>
-                            {{ $breadcrumbs }}
-                        </ul>
-                    </div>
-                </div>
-                @endif
-                
                 <!-- Toast messages -->
                 @if(session('success') || session('error') || session('info'))
                 <div class="toast toast-top toast-end z-50">
@@ -110,4 +99,27 @@
             @include('layouts.navigation')
         </div>
     </body>
+    <!-- Toast auto-dismiss script -->
+    <script>
+  // Simple toast auto-dismiss
+  document.addEventListener('DOMContentLoaded', function() {
+    const alerts = document.querySelectorAll('.toast .alert');
+    if (alerts.length > 0) {
+      alerts.forEach(function(alert) {
+        alert.style.transition = 'opacity 0.5s ease';
+        // Set timeout to hide after 3 seconds
+        setTimeout(function() {
+          alert.style.opacity = '0';
+          // Remove from DOM after transition completes
+          setTimeout(function() {
+            const parentToast = alert.closest('.toast');
+            if (parentToast && alert.parentNode) {
+              alert.parentNode.removeChild(alert);
+            }
+          }, 500);
+        }, 2000);
+      });
+    }
+  });
+</script>
 </html>

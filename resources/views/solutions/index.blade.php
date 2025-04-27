@@ -5,10 +5,10 @@
                 {{ __('Solutions for') }}: {{ $task->name }}
             </h2>
             <div class="flex space-x-2">
-                <a href="{{ route('tasks.show', [$subject, $task]) }}" class="inline-flex items-center px-4 py-2 bg-gray-800 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-gray-700 focus:bg-gray-700 active:bg-gray-900 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 transition ease-in-out duration-150 ml-3">
+                <a href="{{ route('tasks.show', [$subject, $task]) }}" class="inline-flex items-center px-4 py-2 bg-indigo-700 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-gray-700 focus:bg-gray-700 active:bg-gray-900 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 transition ease-in-out duration-150 ml-3">
                     Back to Task
                 </a>
-                <a href="{{ route('subjects.show', $subject) }}" class="inline-flex items-center px-4 py-2 bg-gray-800 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-gray-700 focus:bg-gray-700 active:bg-gray-900 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 transition ease-in-out duration-150 ml-3">
+                <a href="{{ route('subjects.show', $subject) }}" class="inline-flex items-center px-4 py-2 bg-indigo-700 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-gray-700 focus:bg-gray-700 active:bg-gray-900 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 transition ease-in-out duration-150 ml-3">
                     Back to Subject
                 </a>
             </div>
@@ -76,7 +76,7 @@
                                                 @endif
                                             </td>
                                             <td>
-                                                <a href="{{ route('solutions.show', [$subject, $task, $solution]) }}" class="btn btn-xs btn-outline btn-info normal-case">
+                                                <a href="{{ route('solutions.show', [$subject, $task, $solution]) }}" class="w-full bg-green-700 btn btn-xs btn-outline btn-info normal-case">
                                                     View & Grade
                                                 </a>
                                             </td>

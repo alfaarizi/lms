@@ -2,12 +2,16 @@
     <x-slot name="header">
         <div class="flex justify-between items-center">
             <h2 class="font-semibold text-xl text-gray-200 leading-tight mt-2">
-                {{ __('Dashboard') }}
+                @if(isset($viewType) && $viewType == 'self')
+                    {{ __('Your Subjects') }}
+                @else
+                    {{ __('All Available Subjects') }}
+                @endif
             </h2>
             @if(auth()->user()->isTeacher())
             <div class="flex space-x-2">
                 <div>
-                    <a href="{{ route('subjects.create') }}" class="inline-flex items-center px-4 py-2 bg-gray-800 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-gray-700 focus:bg-gray-700 active:bg-gray-900 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 transition ease-in-out duration-150 ml-3">
+                    <a href="{{ route('subjects.create') }}" class="inline-flex items-center px-4 py-2 bg-green-700 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-gray-700 focus:bg-gray-700 active:bg-gray-900 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 transition ease-in-out duration-150 ml-3">
                         New Subject
                     </a>
                 </div>
@@ -22,7 +26,11 @@
                 <div class="h-2 bg-indigo-500"></div>    
                 <div class="p-6 bg-white border-b border-gray-200">
                     <div class="flex justify-between items-center mb-6">
+                    @if(isset($viewType) && $viewType == 'self')
                         <h3 class="text-lg font-medium text-gray-900">Your Subjects</h3>
+                    @else
+                        <h3 class="text-lg font-medium text-gray-900">All Available Subjects</h3>
+                    @endif
                     </div>
 
                     @if($subjects->isEmpty())
@@ -47,7 +55,7 @@
                                         <p class="text-sm text-blue-200">{{ $subject->code }} – {{ $subject->credit }} credits</p>
                                         <p class="text-sm text-white-500 mt-2 line-clamp-2">{{ $subject->description }}</p>
                                         <div class="card-actions justify-end mt-4">
-                                            <a href="{{ route('subjects.show', $subject) }}" class="inline-flex items-center px-4 py-2 bg-gray-800 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-gray-700 focus:bg-gray-700 active:bg-gray-900 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 transition ease-in-out duration-150 ml-3">
+                                            <a href="{{ route('subjects.show', $subject) }}" class="inline-flex items-center px-4 py-2 bg-blue-500 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-gray-700 focus:bg-gray-700 active:bg-gray-900 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 transition ease-in-out duration-150 ml-3 mr-0">
                                                 View Details
                                             </a>
                                             @if(auth()->user()->isStudent())
@@ -55,14 +63,14 @@
                                                     <form action="{{ route('subjects.leave', $subject) }}" method="POST">
                                                         @csrf
                                                         @method('DELETE')
-                                                        <button type="submit" class="inline-flex items-center px-4 py-2 bg-gray-800 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-gray-700 focus:bg-gray-700 active:bg-gray-900 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 transition ease-in-out duration-150 ml-3">
+                                                        <button type="submit" class="inline-flex items-center px-4 py-2 bg-red-700 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-gray-700 focus:bg-gray-700 active:bg-gray-900 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 transition ease-in-out duration-150 ml-0">
                                                             Leave Subject
                                                         </button>
                                                     </form>
                                                 @else
                                                     <form action="{{ route('subjects.enroll', $subject) }}" method="POST">
                                                         @csrf
-                                                        <button type="submit" class="inline-flex items-center px-4 py-2 bg-gray-800 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-gray-700 focus:bg-gray-700 active:bg-gray-900 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 transition ease-in-out duration-150 ml-3">
+                                                        <button type="submit" class="inline-flex items-center px-4 py-2 bg-green-700 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-gray-700 focus:bg-gray-700 active:bg-gray-900 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 transition ease-in-out duration-150 ml-0">
                                                             Enroll
                                                         </button>
                                                     </form>

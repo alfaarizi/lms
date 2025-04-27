@@ -6,18 +6,18 @@
             </h2>
             <div class="flex space-x-2">
                 @if(auth()->user()->isTeacher() && $subject->teacher_id === auth()->id())
-                    <a href="{{ route('subjects.edit', $subject) }}" class="inline-flex items-center px-4 py-2 bg-gray-800 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-gray-700 focus:bg-gray-700 active:bg-gray-900 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 transition ease-in-out duration-150 ml-3 mr-0">
+                    <a href="{{ route('subjects.edit', $subject) }}" class="inline-flex items-center px-4 py-2 bg-yellow-600 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-gray-700 focus:bg-gray-700 active:bg-gray-900 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 transition ease-in-out duration-150 ml-3 mr-0">
                         Edit Subject
                     </a>
                     <form action="{{ route('subjects.destroy', $subject) }}" method="POST" onsubmit="return confirm('Are you sure you want to delete this subject?')">
                         @csrf
                         @method('DELETE')
-                        <button type="submit" class="inline-flex items-center px-4 py-2 bg-gray-800 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-gray-700 focus:bg-gray-700 active:bg-gray-900 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 transition ease-in-out duration-150 ml-0">
+                        <button type="submit" class="inline-flex items-center px-4 py-2 bg-red-700 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-gray-700 focus:bg-gray-700 active:bg-gray-900 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 transition ease-in-out duration-150 ml-0">
                             Delete
                         </button>
                     </form>
                 @endif
-                <a href="{{ route('subjects.index') }}" class="inline-flex items-center px-4 py-2 bg-gray-800 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-gray-700 focus:bg-gray-700 active:bg-gray-900 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 transition ease-in-out duration-150 ml-3">
+                <a href="{{ route('subjects.index') }}" class="inline-flex items-center px-4 py-2 bg-indigo-800 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-gray-700 focus:bg-gray-700 active:bg-gray-900 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 transition ease-in-out duration-150 ml-3">
                     Back to Subjects
                 </a>
             </div>
@@ -48,7 +48,7 @@
                                 <div class="flex justify-between items-center mb-4">
                                     <h3 class="text-lg font-medium text-gray-900">Tasks</h3>
                                     @if(auth()->user()->isTeacher() && $subject->teacher_id === auth()->id())
-                                        <a href="{{ route('tasks.create', $subject) }}" class="inline-flex items-center px-4 py-2 bg-gray-800 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-gray-700 focus:bg-gray-700 active:bg-gray-900 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 transition ease-in-out duration-150 ml-3">
+                                        <a href="{{ route('tasks.create', $subject) }}" class="inline-flex items-center px-4 py-2 bg-green-700 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-gray-700 focus:bg-gray-700 active:bg-gray-900 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 transition ease-in-out duration-150 ml-3">
                                             Create New Task
                                         </a>
                                     @endif
@@ -81,16 +81,16 @@
                                                         <td>{{ $task->points }}</td>
                                                         <td>{{ $task->due_date->format('Y-m-d H:i') }}</td>
                                                         <td>
-                                                            <a href="{{ route('tasks.show', [$subject, $task]) }}" class="btn btn-xs btn-outline btn-info normal-case">
-                                                                View
+                                                            <a href="{{ route('tasks.show', [$subject, $task]) }}" class="w-full bg-blue-500 btn btn-xs btn-outline btn-info normal-case">
+                                                                View Task
                                                             </a>
                                                             @if(auth()->user()->isTeacher())
-                                                                <a href="{{ route('solutions.index', [$subject, $task]) }}" class="btn btn-xs btn-outline btn-success normal-case">
+                                                                <a href="{{ route('solutions.index', [$subject, $task]) }}" class="w-full bg-yellow-500 btn btn-xs btn-outline btn-success normal-case">
                                                                     Solutions
                                                                 </a>
                                                             @endif
                                                             @if(auth()->user()->isStudent())
-                                                                <a href="{{ route('solutions.create', [$subject, $task]) }}" class="btn btn-xs btn-outline btn-primary normal-case">
+                                                                <a href="{{ route('solutions.create', [$subject, $task]) }}" class="w-full bg-green-700 btn btn-xs btn-outline btn-primary normal-case">
                                                                     Submit Solution
                                                                 </a>
                                                             @endif
@@ -129,7 +129,7 @@
                                 <div class="mt-4">
                                     <form action="{{ route('subjects.enroll', $subject) }}" method="POST">
                                         @csrf
-                                        <button type="submit" class="btn btn-primary w-full normal-case">
+                                        <button type="submit" class="justify-center w-full inline-flex items-center px-4 py-2 bg-green-700 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-gray-700 focus:bg-gray-700 active:bg-gray-900 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 transition ease-in-out duration-150">
                                             Enroll in Subject
                                         </button>
                                     </form>
@@ -139,7 +139,7 @@
                                     <form action="{{ route('subjects.leave', $subject) }}" method="POST">
                                         @csrf
                                         @method('DELETE')
-                                        <button type="submit" class="btn btn-outline btn-error w-full normal-case">
+                                        <button type="submit" class="justify-center w-full inline-flex items-center px-4 py-2 bg-red-700 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-gray-700 focus:bg-gray-700 active:bg-gray-900 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 transition ease-in-out duration-150">
                                             Leave Subject
                                         </button>
                                     </form>

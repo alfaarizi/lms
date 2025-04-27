@@ -18,7 +18,7 @@
                 </div>
             </div>
             <div class="mt-2 text-center">
-                <h3 class="font-medium"><a href="{{ route('profile.edit') }}">{{ Auth::user()->name }}</a></h3>
+                <h3 class="font-medium hover:underline hover:text-indigo-300"><a href="{{ route('profile.edit') }}">{{ Auth::user()->name }}</a></h3>
                 <p class="font-bold text-sm opacity-60">{{ Auth::user()->role }}</p>
             </div>
         </div>
@@ -27,7 +27,7 @@
         <ul class="space-y-1 w-full">
             <!-- Dashboard -->
             <li>
-                <a href="{{ route('subjects.index') }}" class="{{ request()->routeIs('subjects.index') ? 'active' : '' }} flex items-start">
+                <a href="{{ route('dashboard') }}" class="{{ request()->routeIs('subjects.index') ? 'active' : '' }} flex items-start">
                     <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" />
                     </svg>
@@ -38,6 +38,7 @@
             <!-- Role section -->
             <li class="menu-title">
                 <span class="font-bold text-white-800">{{ Auth::check() && Auth::user()->isTeacher() ? 'Teacher' : 'Student' }}</span>
+                
             </li>
             <li>
                 <a href="{{ route('subjects.index') }}" class="{{ request()->routeIs('subjects.index') ? 'active' : '' }} flex items-start">
@@ -59,7 +60,7 @@
             @endif
             @if(Auth::check() && Auth::user()->isStudent())
             <li>
-                <a href="{{ route('subjects.index') }}" class="{{ request()->routeIs('subjects.index') ? 'active' : '' }} flex items-start">
+                <a href="{{ route('dashboard') }}" class="{{ request()->routeIs('subjects.index') ? 'active' : '' }} flex items-start">
                     <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v3m0 0v3m0-3h3m-3 0H9m12 0a9 9 0 11-18 0 9 9 0 0118 0z" />
                     </svg>
@@ -71,14 +72,6 @@
             <!-- Profile Management -->
             <li class="menu-title mt-4">
                 <span class="font-bold text-white-800">Account</span>
-            </li>
-            <li>
-                <a href="{{ route('profile.edit') }}" class="{{ request()->routeIs('profile.edit') ? 'active' : '' }} flex items-start">
-                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
-                    </svg>
-                    <span class="ml-0 whitespace-nowrap">Contact</span>
-                </a>
             </li>
             <li>
                 <a href="{{ route('profile.edit') }}" class="{{ request()->routeIs('profile.edit') ? 'active' : '' }} flex items-start">

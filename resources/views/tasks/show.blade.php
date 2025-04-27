@@ -6,18 +6,18 @@
             </h2>
             <div class="flex space-x-2">
                 @if(auth()->user()->isTeacher() && $subject->teacher_id === auth()->id())
-                    <a href="{{ route('tasks.edit', [$subject, $task]) }}" class="inline-flex items-center px-4 py-2 bg-gray-800 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-gray-700 focus:bg-gray-700 active:bg-gray-900 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 transition ease-in-out duration-150 ml-3 mr-0">
+                    <a href="{{ route('tasks.edit', [$subject, $task]) }}" class="inline-flex items-center px-4 py-2 bg-yellow-600 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-gray-700 focus:bg-gray-700 active:bg-gray-900 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 transition ease-in-out duration-150 ml-3 mr-0">
                         Edit Task
                     </a>
                     <form action="{{ route('tasks.destroy', [$subject, $task]) }}" method="POST" onsubmit="return confirm('Are you sure you want to delete this task?')">
                         @csrf
                         @method('DELETE')
-                        <button type="submit" class="inline-flex items-center px-4 py-2 bg-gray-800 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-gray-700 focus:bg-gray-700 active:bg-gray-900 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 transition ease-in-out duration-150 ml-0">
+                        <button type="submit" class="inline-flex items-center px-4 py-2 bg-red-700 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-gray-700 focus:bg-gray-700 active:bg-gray-900 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 transition ease-in-out duration-150 ml-0">
                             Delete
                         </button>
                     </form>
                 @endif
-                <a href="{{ route('subjects.show', $subject) }}" class="inline-flex items-center px-4 py-2 bg-gray-800 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-gray-700 focus:bg-gray-700 active:bg-gray-900 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 transition ease-in-out duration-150 ml-3">
+                <a href="{{ route('subjects.show', $subject) }}" class="inline-flex items-center px-4 py-2 bg-indigo-800 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-gray-700 focus:bg-gray-700 active:bg-gray-900 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 transition ease-in-out duration-150 ml-3">
                     Back to Subject
                 </a>
             </div>
@@ -34,6 +34,10 @@
                             <h3 class="text-lg font-medium text-gray-900 mb-4">Task Details</h3>
                             
                             <div class="bg-gray-50 p-4 rounded-lg mb-6">
+                                <p class="mb-2 text-gray-600">
+                                    <span class="font-semibold">Name:</span> {{ $task->name }}
+                                </p>
+                            
                                 <p class="mb-2 text-gray-600">
                                     <span class="font-semibold">Points:</span> {{ $task->points }}
                                 </p>
@@ -69,7 +73,7 @@
                                         </div>
                                         
                                         <div class="mt-4">
-                                            <a href="{{ route('solutions.create', [$subject, $task]) }}" class="btn btn-primary normal-case">
+                                            <a href="{{ route('solutions.create', [$subject, $task]) }}" class="inline-flex items-center px-4 py-2 bg-green-700 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-gray-700 focus:bg-gray-700 active:bg-gray-900 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 transition ease-in-out duration-150">
                                                 Submit Solution
                                             </a>
                                         </div>
@@ -109,7 +113,7 @@
                                         
                                         @if($task->due_date >= now())
                                             <div class="mt-4">
-                                                <a href="{{ route('solutions.create', [$subject, $task]) }}" class="btn btn-primary normal-case">
+                                                <a href="{{ route('solutions.create', [$subject, $task]) }}" class="inline-flex items-center px-4 py-2 bg-green-700 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-gray-700 focus:bg-gray-700 active:bg-gray-900 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 transition ease-in-out duration-150">
                                                     Submit New Solution
                                                 </a>
                                             </div>
@@ -122,7 +126,7 @@
                                 <div class="mt-6">
                                     <div class="flex justify-between items-center mb-4">
                                         <h3 class="text-lg font-medium text-gray-900">Student Solutions</h3>
-                                        <a href="{{ route('solutions.index', [$subject, $task]) }}" class="inline-flex items-center px-4 py-2 bg-gray-800 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-gray-700 focus:bg-gray-700 active:bg-gray-900 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 transition ease-in-out duration-150 ml-3">
+                                        <a href="{{ route('solutions.index', [$subject, $task]) }}" class="inline-flex items-center px-4 py-2 bg-blue-500 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-gray-700 focus:bg-gray-700 active:bg-gray-900 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 transition ease-in-out duration-150 ml-3">
                                             View All Solutions
                                         </a>
                                     </div>
@@ -168,7 +172,7 @@
                                                                 @endif
                                                             </td>
                                                             <td>
-                                                                <a href="{{ route('solutions.show', [$subject, $task, $solution]) }}" class="btn btn-xs btn-outline btn-info normal-case">
+                                                                <a href="{{ route('solutions.show', [$subject, $task, $solution]) }}" class="w-full bg-blue-500 btn btn-xs btn-outline btn-info normal-case">
                                                                     View
                                                                 </a>
                                                             </td>
@@ -192,10 +196,10 @@
                             
                             @if(auth()->user()->isStudent())
                                 <div class="bg-base-100 border border-gray-200 rounded-lg p-4">
-                                    <h3 class="font-medium text-gray-900 mb-2">Quick Actions</h3>
+                                    <h3 class="font-medium text-gray-200 mb-2">Quick Actions</h3>
                                     
                                     @if($task->due_date >= now())
-                                        <a href="{{ route('solutions.create', [$subject, $task]) }}" class="btn btn-primary btn-sm w-full normal-case mb-2">
+                                        <a href="{{ route('solutions.create', [$subject, $task]) }}" class="justify-center w-full inline-flex items-center px-4 py-2 bg-green-700 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-gray-700 focus:bg-gray-700 active:bg-gray-900 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 transition ease-in-out duration-150">
                                             Submit Solution
                                         </a>
                                     @else
@@ -207,7 +211,7 @@
                                         </div>
                                     @endif
                                     
-                                    <a href="{{ route('subjects.show', $subject) }}" class="btn btn-outline btn-sm w-full normal-case">
+                                    <a href="{{ route('subjects.show', $subject) }}" class="justify-center w-full inline-flex items-center px-4 py-2 bg-yellow-500 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-gray-700 focus:bg-gray-700 active:bg-gray-900 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 transition ease-in-out duration-150">
                                         Back to Subject
                                     </a>
                                 </div>
