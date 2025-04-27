@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('subjects', function (Blueprint $table) {
             $table->id();
             $table->string('name', 255);
-            $table->text('description');
+            $table->text('description')->nullable();
             $table->string('code', 9);
             $table->integer('credit');
             $table->foreignId('teacher_id')->constrained('users')->onDelete('cascade');

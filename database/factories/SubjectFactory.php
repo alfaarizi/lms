@@ -32,7 +32,7 @@ class SubjectFactory extends Factory
             'name' => $this->faker->words(3, true),
             'description' => $this->faker->paragraphs(3, true),
             'code' => "IK-{$letters}{$numbers}",
-            'credit' => $this->faker->numberBetween(2, 6),
+            'credit' => $this->faker->numberBetween(1, 6),
             'teacher_id' => User::factory()->create(['role' => 'teacher'])->id,
             'created_at' => $this->faker->dateTimeBetween('-1 year', 'now'),
             'updated_at' => $this->faker->dateTimeBetween('-1 month', 'now'),
