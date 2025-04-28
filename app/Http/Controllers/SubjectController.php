@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Subject;
+use Illuminate\Validation\Rule;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -11,10 +12,16 @@ class SubjectController extends Controller
     /**
      * Display a listing of all subjects.
      */
-    public function dashboard()
+    public function dashboard(Request $request)
     {
-        $subjects = Subject::all();
-        $viewType = 'all';
+        $user = Auth::user();
+        $viewType = $request->query('filter') == 'available' ? 'available' : 'all';
+        if ($user->isStudent() && $viewType == 'available') {
+            $enrolledIds = $user->enrolledSubjects->pluck('id');
+            $subjects = Subject::whereNotIn('id', $enrolledIds)->get();
+        } else {
+            $subjects = Subject::all();
+        }
         return view('subjects.index', compact('subjects', 'viewType'));
     }
 
@@ -86,12 +93,16 @@ class SubjectController extends Controller
         $validated = $request->validate([
             'name' => 'required|string|min:3|max:255',
             'description' => 'nullable|string',
+            'code' => [
+                'required',
+                'string',
+                'max:9',
+                Rule::unique('subjects')->ignore($subject->id),
+                'regex:/^IK-[A-Z]{3}[0-9]{3}$/',
+            ],
             'credit' => 'required|integer|min:1',
         ]);
-        $subject->update([
-            ...$validated,
-            'code' => $subject->code,
-        ]);
+        $subject->update($validated);
         return redirect()
             ->route('subjects.show', $subject)
             ->with('success', 'Subject updated successfully');

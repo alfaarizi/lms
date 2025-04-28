@@ -170,7 +170,9 @@
                             <a href="#" class="text-base text-gray-500 hover:text-gray-900">Blog</a>
                         </div>
                         <div class="px-5 py-2">
-                            <a href="#" class="text-base text-gray-500 hover:text-gray-900">Contact</a>
+                            <a href="{{ route('contact') }}" class="{{ request()->routeIs('contact') ? 'active' : '' }} flex items-start">
+                                <span class="whitespace-nowrap text-gray-500 hover:underline">Contact</span>
+                            </a>
                         </div>
                     </nav>
                     <div class="mt-8 flex justify-center space-x-6">

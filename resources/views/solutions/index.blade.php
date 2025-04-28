@@ -44,13 +44,15 @@
                             </div>
                         </div>
                     @else
-                        <h3 class="text-lg font-medium text-gray-900 mb-4">Student Submissions</h3>
+                        <h3 class="text-lg font-medium text-gray-900 mb-4">Student Submissions ({{ $task->solutions->whereNotNull('earned_points')->whereNotNull('evaluation_time')->count() }}/{{ $task->solutions->count() }})</h3>
                         <div class="overflow-x-auto">
                             <table class="table w-full table-zebra border-collapse border border-gray-800">
                                 <thead>
                                     <tr>
                                         <th class="text-gray-600">Student</th>
+                                        <th class="text-gray-600">Email</th>
                                         <th class="text-gray-600">Submission Date</th>
+                                        <th class="text-gray-600">Evaluation Date</th>
                                         <th class="text-gray-600">Status</th>
                                         <th class="text-gray-600">Points</th>
                                         <th class="text-gray-600">Actions</th>
@@ -60,7 +62,13 @@
                                     @foreach($solutions as $solution)
                                         <tr class="odd:bg-gray-800">
                                             <td>{{ $solution->student->name }}</td>
+                                            <td>{{ $solution->student->email }}</td>
                                             <td>{{ $solution->created_at->format('Y-m-d H:i') }}</td>
+                                            @if($solution->evaluation_time)
+                                                <td>{{ $solution->evaluation_time->format('Y-m-d H:i')}}</td>    
+                                            @else
+                                                <td class="text-gray-500">Not evaluated</td>    
+                                            @endif
                                             <td>
                                                 @if($solution->evaluation_time)
                                                     <span class="badge badge-success">Evaluated</span>

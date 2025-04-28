@@ -39,6 +39,8 @@
                                     <p class="mb-2 text-gray-600"><span class="font-semibold">Code:</span> {{ $subject->code }}</p>
                                     <p class="mb-2 text-gray-600"><span class="font-semibold">Credits:</span> {{ $subject->credit }}</p>
                                     <p class="mb-2 text-gray-600"><span class="font-semibold">Teacher:</span> {{ $subject->teacher->name }}</p>
+                                    <p class="mb-2 text-gray-600"><span class="font-semibold">Created:</span> {{ $subject->created_at }}</p>
+                                    <p class="mb-2 text-gray-600"><span class="font-semibold">Last modified:</span> {{ $subject->updated_at }}</p>
                                     <p class="mb-4 text-gray-600"><span class="font-semibold">Description:</span></p>
                                     <p class="text-gray-600">{{ $subject->description }}</p>
                                 </div>
@@ -46,7 +48,7 @@
 
                             <div>
                                 <div class="flex justify-between items-center mb-4">
-                                    <h3 class="text-lg font-medium text-gray-900">Tasks</h3>
+                                    <h3 class="text-lg font-medium text-gray-900">Tasks ({{ $subject->tasks->count() }})</h3>
                                     @if(auth()->user()->isTeacher() && $subject->teacher_id === auth()->id())
                                         <a href="{{ route('tasks.create', $subject) }}" class="inline-flex items-center px-4 py-2 bg-green-700 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-gray-700 focus:bg-gray-700 active:bg-gray-900 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 transition ease-in-out duration-150 ml-3">
                                             Create New Task
@@ -77,7 +79,11 @@
                                             <tbody>
                                                 @foreach($subject->tasks as $task)
                                                     <tr class="odd:bg-gray-800">
-                                                        <td>{{ $task->name }}</td>
+                                                        <td>
+                                                        <a href="{{ route('tasks.show', [$subject, $task]) }}" class="hover:underline">
+                                                            {{ $task->name }}
+                                                        </a>
+                                                        </td>
                                                         <td>{{ $task->points }}</td>
                                                         <td>{{ $task->due_date->format('Y-m-d H:i') }}</td>
                                                         <td>
@@ -105,7 +111,7 @@
                         </div>
 
                         <div>
-                            <h3 class="text-lg font-medium text-gray-900 mb-2">Students Enrolled</h3>
+                            <h3 class="text-lg font-medium text-gray-900 mb-2">Students Enrolled ({{ $subject->students->count() }})</h3>
                             @if($subject->students->isEmpty())
                                 <div class="alert alert-info">
                                     <div class="flex-1">
@@ -119,7 +125,11 @@
                                 <div class="bg-gray-50 p-4 rounded-lg">
                                     <ul class="divide-y divide-gray-200">
                                         @foreach($subject->students as $student)
-                                            <li class="py-2 text-gray-600">{{ $student->name }}</li>
+                                            <li class="py-2 text-gray-600">{{ $student->name }}
+                                                <br><span class="text-gray-500 text-sm break-all overflow-hidden">
+                                                    ({{ $student->email }})
+                                                </span>
+                                            </li>
                                         @endforeach
                                     </ul>
                                 </div>

@@ -4,6 +4,8 @@
             <h2 class="font-semibold text-xl text-gray-200 leading-tight mt-2">
                 @if(isset($viewType) && $viewType == 'self')
                     {{ __('Your Subjects') }}
+                @elseif (isset($viewType) && $viewType == 'available')
+                    {{ __('Available Subjects for Enrollment') }}
                 @else
                     {{ __('All Available Subjects') }}
                 @endif
@@ -27,9 +29,11 @@
                 <div class="p-6 bg-white border-b border-gray-200">
                     <div class="flex justify-between items-center mb-6">
                     @if(isset($viewType) && $viewType == 'self')
-                        <h3 class="text-lg font-medium text-gray-900">Your Subjects</h3>
+                        <h3 class="text-lg font-medium text-gray-900">Your Subjects ({{ $subjects->count() }})</h3>
+                    @elseif (isset($viewType) && $viewType == 'available')
+                        <h3 class="text-lg font-medium text-gray-900">Available Subjects for Enrollment ({{ $subjects->count() }})</h3>
                     @else
-                        <h3 class="text-lg font-medium text-gray-900">All Available Subjects</h3>
+                        <h3 class="text-lg font-medium text-gray-900">All Available Subjects ({{ $subjects->count() }})</h3>
                     @endif
                     </div>
 

@@ -25,6 +25,7 @@
         @endauth
 
         <ul class="space-y-1 w-full">
+            @if(Auth::check())
             <!-- Dashboard -->
             <li>
                 <a href="{{ route('dashboard') }}" class="{{ request()->routeIs('subjects.index') ? 'active' : '' }} flex items-start">
@@ -34,8 +35,10 @@
                     <span class="ml-0 whitespace-nowrap">Dashboard</span>
                 </a>
             </li>
+            @endif
 
             <!-- Role section -->
+            @if(Auth::check())
             <li class="menu-title">
                 <span class="font-bold text-white-800">{{ Auth::check() && Auth::user()->isTeacher() ? 'Teacher' : 'Student' }}</span>
                 
@@ -48,6 +51,7 @@
                     <span class="ml-0 whitespace-nowrap">My Subjects</span>
                 </a>
             </li>
+            @endif
             @if(Auth::check() && Auth::user()->isTeacher())
             <li>
                 <a href="{{ route('subjects.create') }}" class="{{ request()->routeIs('subjects.create') ? 'active' : '' }} flex items-start">
@@ -60,7 +64,7 @@
             @endif
             @if(Auth::check() && Auth::user()->isStudent())
             <li>
-                <a href="{{ route('dashboard') }}" class="{{ request()->routeIs('subjects.index') ? 'active' : '' }} flex items-start">
+            <a href="{{ route('dashboard', ['filter' => 'available']) }}" class="{{ request()->routeIs('dashboard') && request()->query('filter') == 'available' ? 'active' : '' }} flex items-start">
                     <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v3m0 0v3m0-3h3m-3 0H9m12 0a9 9 0 11-18 0 9 9 0 0118 0z" />
                     </svg>
@@ -70,6 +74,21 @@
             @endif
 
             <!-- Profile Management -->
+            <li class="menu-title mt-4">
+                <span class="font-bold text-white-800">Author</span>
+            </li>
+            <li>
+                <!-- Contact SVG and SPAN -->
+                <a href="{{ route('contact') }}" class="{{ request()->routeIs('contact') ? 'active' : '' }} flex items-start">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+                    </svg>
+                    <span class="ml-0 whitespace-nowrap">Contact</span>
+                </a>
+            </li>
+
+            <!-- Profile Management -->
+            @if(Auth::check())
             <li class="menu-title mt-4">
                 <span class="font-bold text-white-800">Account</span>
             </li>
@@ -92,6 +111,7 @@
                     </a>
                 </form>
             </li>
+            @endif
         </ul>
 
         <!-- Footer -->
