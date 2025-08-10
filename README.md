@@ -2,7 +2,7 @@
 
 ## About
 
-This project is a Learning Management System (LMS) built with Laravel. It enables teachers to create subjects and tasks, while students can enroll in subjects, submit solutions to tasks, and track their learning progress. The platform supports user roles, progress tracking, and provides a user-friendly interface for managing educational activities.
+This project is a Learning Management System (LMS) built with Laravel. It allows teachers to create subjects and tasks, while students can enroll in subjects, submit solutions to tasks, and track their learning progress. The platform supports user roles, progress tracking, and provides a user-friendly interface for managing educational activities.
 
 ## Preview
 
