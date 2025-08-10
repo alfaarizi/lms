@@ -1,3 +1,48 @@
+# LMS
+
+## About
+
+This project is a Learning Management System (LMS) built with Laravel. It enables teachers to create subjects and tasks, while students can enroll in subjects, submit solutions to tasks, and track their learning progress. The platform supports user roles, progress tracking, and provides a user-friendly interface for managing educational activities.
+
+## Preview
+
+<div align="center">
+    <img src="assets/preview1.png" alt="Preview 1" height="200"/>
+    <img src="assets/preview2.png" alt="Preview 2" height="200"/>
+</div>
+
+<div align="center">
+    <img src="assets/preview3.png" alt="Preview 3" height="200"/>
+    <img src="assets/preview4.png" alt="Preview 4" height="200"/>
+</div>
+
+<div align="center">
+    <img src="assets/preview5.png" alt="Preview 5" height="200"/>
+    <img src="assets/preview6.png" alt="Preview 6" height="200"/>
+</div>
+
+<div align="center">
+    <img src="assets/preview7.png" alt="Preview 7" height="200"/>
+    <img src="assets/preview8.png" alt="Preview 8" height="200"/>
+</div>
+
+<div align="center">
+    <img src="assets/preview9.png" alt="Preview 9" height="200"/>
+    <img src="assets/preview10.png" alt="Preview 10" height="200"/>
+</div>
+
+## Teacher Credentials
+
+Below are the login credentials for pre-defined teachers in the system:
+
+| Name | Neptun | Email | Password |
+|------|--------|-------|----------|
+| alfaarizi | M4ZRL5 | alfaarizi@example.com | password |
+| nagy | M4ZRL5 | nagy.bendeguz@example.com | password |
+| horvarth | GYOZKE | horvarth.gyozo@example.com | password |
+
+## About Laravel
+
 <p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
 
 <p align="center">
@@ -6,8 +51,6 @@
 <a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
 <a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
 </p>
-
-## About Laravel
 
 Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
 
@@ -59,30 +102,3 @@ If you discover a security vulnerability within Laravel, please send an e-mail t
 ## License
 
 The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
-
-# LMS
-
-## Teacher Credentials
-
-Below are the login credentials for pre-defined teachers in the system:
-
-| Name | Neptun | Email | Password |
-|------|--------|-------|----------|
-| alfaarizi | M4ZRL5 | alfaarizi@example.com | password |
-| nagy | M4ZRL5 | nagy.bendeguz@example.com | password |
-| horvarth | GYOZKE | horvarth.gyozo@example.com | password |
-
-
-## Additional Information
-
-<Muhammad Al Farizi>
-<OCSWOM>
-This solution was submitted and prepared by stundent named above for the home assignment of the Web eng
-ineering course.
-I declare that this solution is my own work.
-I have not copied or used third party solutions.
-I have not passed my solution to my classmates, neither made it public.
-Students’ regulation of Eötvös Loránd University (ELTE Regulations Vol. II. 74/C. § ) states that as lo
-ng as a student presents another student’s work - or at least the significant part of it - as his/her o
-wn performance, it will count as a disciplinary fault. The most serious consequence of a disciplinary f
-ault can be dismissal of the student from the University.
